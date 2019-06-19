@@ -32,6 +32,11 @@ class SurveyImage
      */
     private $fake;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $image;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class SurveyImage
     public function setFake(bool $fake): self
     {
         $this->fake = $fake;
+
+        return $this;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
