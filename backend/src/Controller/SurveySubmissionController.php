@@ -6,38 +6,41 @@ use App\Entity\Survey;
 use App\Entity\SurveySubmission;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class SurveySubmissionController extends BaseController
-{
+class SurveySubmissionController extends BaseController {
     /**
      * @Route("/submission", name="submission_create", methods={"POST"})
-     * @param string $surveyUuid
-     * @param string $name
+     * @param Request $request
      * @return JsonResponse
      * @throws NonUniqueResultException
      */
-    public function createSubmission(string $surveyUuid, string $name) {
+    public function createSubmission(Request $request) {
+        $surveyUuid = $request->request->get('survey_uuid');
+        $name = $request->request->get('name');
+
         try {
+            $survey = $this->getDoctrine()
+                ->getRepository(Survey::class)
+                ->findByUuid($surveyUuid);
 
-        $survey = $this->getDoctrine()
-            ->getRepository(Survey::class)
-            ->findByUuid($surveyUuid);
+            $submission = new SurveySubmission();
 
-        $submission = new SurveySubmission();
+            $submission->setUuid(Uuid::uuid4()->toString());
+            $submission->setSubmitted(false);
+            $submission->setSurvey($survey);
+            $submission->setName($name);
 
-        $submission->setSurvey($survey);
-        $submission->setName($name);
+            // TODO create submission images
 
-        // TODO create submission images
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($submission);
+            $manager->flush();
 
-        $manager = $this->getDoctrine()->getManager();
-        $manager->persist($submission);
-        $manager->flush();
-
-        return $this->json($submission);
+            return $this->json($submission);
         } catch (NoResultException $e) {
             return $this->json([
                 'message' => vsprintf('Survey with uuid "%s" not found.', [$surveyUuid]),

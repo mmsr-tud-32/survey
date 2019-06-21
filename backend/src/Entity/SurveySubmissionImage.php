@@ -20,7 +20,7 @@ class SurveySubmissionImage
 
     /**
      * @Serializer\Expose
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $fake;
 
