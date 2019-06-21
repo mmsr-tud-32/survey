@@ -27,6 +27,7 @@ class SurveySubmission
     private $uuid;
 
     /**
+     * @Serializer\Expose
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -49,9 +50,16 @@ class SurveySubmission
      */
     private $images;
 
+    /**
+     * @Serializer\Expose
+     * @ORM\OneToMany(targetEntity="App\Entity\SurveySubmissionPractiseImage", mappedBy="submission")
+     */
+    private $practise_images;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->practise_images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -133,6 +141,32 @@ class SurveySubmission
             if ($image->getSubmission() === $this) {
                 $image->setSubmission(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SurveySubmissionPractiseImage[]
+     */
+    public function getPractiseImages(): Collection
+    {
+        return $this->practise_images;
+    }
+
+    public function addPractiseImage(SurveySubmissionPractiseImage $practiseImage): self
+    {
+        if (!$this->practise_images->contains($practiseImage)) {
+            $this->practise_images[] = $practiseImage;
+        }
+
+        return $this;
+    }
+
+    public function removePractiseImage(SurveySubmissionPractiseImage $practiseImage): self
+    {
+        if ($this->practise_images->contains($practiseImage)) {
+            $this->practise_images->removeElement($practiseImage);
         }
 
         return $this;

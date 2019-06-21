@@ -29,9 +29,46 @@ class SurveyController extends BaseController {
         $survey->setUuid(Uuid::uuid4()->toString());
         $survey->setTitle($request->request->get('title'));
         $survey->setDescription($request->request->get('description'));
+        $survey->setNumPractise($request->request->getInt('num_practise'));
+        $survey->setNumQuestion($request->request->getInt('num_question'));
 
         $entityManager->persist($survey);
         $entityManager->flush();
+
+        return $this->json($survey);
+    }
+
+    /**
+     * @Route("/survey/{uuid}", name="update_survey", methods={"PATCH"})
+     *
+     * @param $uuid
+     * @param Request $request
+     * @return JsonResponse
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function updateSurvey($uuid, Request $request) {
+        $survey = $this->getDoctrine()
+            ->getRepository(Survey::class)
+            ->findByUuid($uuid);
+
+        if ($request->request->has('title')) {
+            $survey->setTitle($request->request->get('title'));
+        }
+
+        if ($request->request->has('description')) {
+            $survey->setDescription($request->request->get('description'));
+        }
+
+        if ($request->request->has('num_practise')) {
+            $survey->setNumPractise($request->request->getInt('num_practise'));
+        }
+
+        if ($request->request->has('num_question')) {
+            $survey->setNumQuestion($request->request->getInt('num_question'));
+        }
+
+        $this->getDoctrine()->getManager()->flush();
 
         return $this->json($survey);
     }

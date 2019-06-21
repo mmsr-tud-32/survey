@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\SurveySubmission;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -17,6 +19,24 @@ class SurveySubmissionRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, SurveySubmission::class);
+    }
+
+    /**
+     * @param $value
+     * @return SurveySubmission Returns a Survey object
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function findByUuid($value)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.uuid = :val')
+            ->setParameter('val', $value)
+            ->orderBy('s.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult()
+            ;
     }
 
     // /**

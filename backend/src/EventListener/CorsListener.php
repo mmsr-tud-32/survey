@@ -33,7 +33,7 @@ class CorsListener {
         }
         $response = $event->getResponse();
         $response->headers->set('Access-Control-Allow-Origin', '*');
-        $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,PUT');
+        $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH');
         $response->headers->set('Access-Control-Allow-Headers', 'origin, content-type, accept');
     }
 

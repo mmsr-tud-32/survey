@@ -48,6 +48,16 @@ class Survey
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $num_practise;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $num_question;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -153,6 +163,30 @@ class Survey
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getNumPractise(): ?int
+    {
+        return $this->num_practise;
+    }
+
+    public function setNumPractise(int $num_practise): self
+    {
+        $this->num_practise = $num_practise;
+
+        return $this;
+    }
+
+    public function getNumQuestion(): ?int
+    {
+        return $this->num_question;
+    }
+
+    public function setNumQuestion(int $num_question): self
+    {
+        $this->num_question = $num_question;
 
         return $this;
     }
