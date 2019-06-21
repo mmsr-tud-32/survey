@@ -6,10 +6,9 @@ use App\Entity\Survey;
 use App\Entity\SurveyImage;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Exception;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +20,7 @@ class SurveyController extends BaseController {
      *
      * @param Request $request
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function create(Request $request) {
         $entityManager = $this->getDoctrine()->getManager();
@@ -64,7 +63,7 @@ class SurveyController extends BaseController {
      * @return JsonResponse
      * @throws NoResultException
      * @throws NonUniqueResultException
-     * @throws \Exception
+     * @throws Exception
      */
     public function addImage($uuid, Request $request, LoggerInterface $logger) {
         $survey = $this->getDoctrine()->getRepository(Survey::class)->findByUuid($uuid);

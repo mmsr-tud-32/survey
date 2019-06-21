@@ -6,6 +6,7 @@ use App\Entity\Survey;
 use App\Entity\SurveySubmission;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Exception;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,7 @@ class SurveySubmissionController extends BaseController {
      * @param Request $request
      * @return JsonResponse
      * @throws NonUniqueResultException
+     * @throws Exception
      */
     public function createSubmission(Request $request) {
         $surveyUuid = $request->request->get('survey_uuid');
