@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class SurveySubmissionController extends AbstractController
+class SurveySubmissionController extends BaseController
 {
     /**
      * @Route("/submission", name="submission_create", methods={"POST"})

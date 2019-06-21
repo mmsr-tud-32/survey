@@ -3,8 +3,10 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
+ * @Serializer\ExclusionPolicy("all")
  * @ORM\Entity(repositoryClass="App\Repository\SurveySubmissionImageRepository")
  */
 class SurveySubmissionImage
@@ -17,6 +19,7 @@ class SurveySubmissionImage
     private $id;
 
     /**
+     * @Serializer\Expose
      * @ORM\Column(type="boolean")
      */
     private $fake;
@@ -28,6 +31,7 @@ class SurveySubmissionImage
     private $submission;
 
     /**
+     * @Serializer\Expose
      * @ORM\ManyToOne(targetEntity="App\Entity\SurveyImage")
      * @ORM\JoinColumn(nullable=false)
      */

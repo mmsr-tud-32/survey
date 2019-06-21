@@ -3,8 +3,10 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
+ * @Serializer\ExclusionPolicy("all")
  * @ORM\Entity(repositoryClass="App\Repository\SurveyImageRepository")
  */
 class SurveyImage
@@ -17,6 +19,7 @@ class SurveyImage
     private $id;
 
     /**
+     * @Serializer\Expose
      * @ORM\Column(type="guid")
      */
     private $uuid;
@@ -33,6 +36,7 @@ class SurveyImage
     private $fake;
 
     /**
+     * @Serializer\Expose
      * @ORM\Column(type="string", length=255)
      */
     private $image;

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class SurveyController extends AbstractController {
+class SurveyController extends BaseController {
     /**
      * @Route("/survey", name="create_survey", methods={"POST"})
      *
@@ -64,6 +64,7 @@ class SurveyController extends AbstractController {
      * @return JsonResponse
      * @throws NoResultException
      * @throws NonUniqueResultException
+     * @throws \Exception
      */
     public function addImage($uuid, Request $request, LoggerInterface $logger) {
         $survey = $this->getDoctrine()->getRepository(Survey::class)->findByUuid($uuid);

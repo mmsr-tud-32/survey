@@ -5,8 +5,9 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use JMS\Serializer\Annotation as Serializer;
 /**
+ * @Serializer\ExclusionPolicy("all")
  * @ORM\Entity(repositoryClass="App\Repository\SurveyRepository")
  */
 class Survey
@@ -19,16 +20,19 @@ class Survey
     private $id;
 
     /**
+     * @Serializer\Expose
      * @ORM\Column(type="guid")
      */
     private $uuid;
 
     /**
+     * @Serializer\Expose
      * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
+     * @Serializer\Expose
      * @ORM\OneToMany(targetEntity="App\Entity\SurveyImage", mappedBy="survey")
      */
     private $images;
@@ -39,6 +43,7 @@ class Survey
     private $submissions;
 
     /**
+     * @Serializer\Expose
      * @ORM\Column(type="text")
      */
     private $description;
