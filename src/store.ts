@@ -38,7 +38,7 @@ export default new Vuex.Store({
 
             axios({
                 method: 'post',
-                url: 'https://127.0.0.1:8000/submission',
+                url: `${process.env.VUE_APP_API_HOST}/submission`,
                 data,
                 headers: {'Content-Type': 'multipart/form-data'},
             }).then((response) => {
