@@ -2,6 +2,16 @@
 
 ## Setup
 
+Create a user `mmsr` with password `mmsr` and a database `survey` on mysql. Or add a `.env.local` file which overrides the connection string to point to a different database.
+
+### Migrations
+
+```
+php bin/console doctrine:migrations:migrate
+```
+
+### Dev server
+
 ```
 symfony server:start
 ```
