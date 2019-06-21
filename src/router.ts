@@ -14,12 +14,12 @@ export default new Router({
       component: Home,
     },
     {
-      path: '/intro/:submissionUuid',
+      path: '/intro',
       name: 'intro',
       component: () => import(/* webpackChunkName: "intro" */ './views/Intro.vue'),
     },
     {
-      path: '/question/:submissionUuid/:imageUuid',
+      path: '/question',
       name: 'question',
       component: () => import(/* webpackChunkName: "question" */ './views/Question.vue'),
     },

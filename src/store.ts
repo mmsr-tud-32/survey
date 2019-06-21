@@ -36,7 +36,7 @@ export default new Vuex.Store({
             data.append('survey_uuid', state.surveyUuid);
             data.append('name', name);
 
-            axios({
+            return axios({
                 method: 'post',
                 url: `${process.env.VUE_APP_API_HOST}/submission`,
                 data,

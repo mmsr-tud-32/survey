@@ -4,6 +4,7 @@
       <h1 class="col">{{$t("welcome")}}</h1>
       <LocaleChanger class="col-auto"></LocaleChanger>
     </div>
+    <p>{{$t("welcome_msg")}}</p>
     <form @submit="startSurvey">
       <div class="form-group">
         <label for="name">{{$t("name")}}</label>
@@ -33,7 +34,8 @@
     private async startSurvey(event: Event) {
       event.preventDefault();
 
-      this.$store.dispatch('createSubmission', this.name);
+      this.$store.dispatch('createSubmission', this.name)
+        .then(() => this.$router.push('/intro'));
     }
   }
 </script>
