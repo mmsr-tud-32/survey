@@ -4,7 +4,7 @@
     <p>
       {{$t("introduction_body")}}
     </p>
-    <router-link class="btn btn-primary" to="/question">{{$t("btn_practise")}}</router-link>
+    <router-link class="btn btn-primary" to="/practise">{{$t("btn_practise")}}</router-link>
   </div>
 </template>
 

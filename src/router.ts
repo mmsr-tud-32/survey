@@ -25,14 +25,14 @@ export default new Router({
       component: () => import(/* webpackChunkName: "intro" */ './views/Intro.vue'),
     },
     {
-      path: '/question',
-      name: 'question',
-      component: () => import(/* webpackChunkName: "question" */ './views/Question.vue'),
-    },
-    {
       path: '/error',
       name: 'error',
       component: () => import(/* webpackChunkName: "error" */ './views/Error.vue'),
+    },
+    {
+      path: '/practise',
+      name: 'practise',
+      component: () => import(/* webpackChunkName: "practise" */ './views/QuestionPractise.vue'),
     },
   ],
 });

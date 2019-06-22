@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\SurveyImage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -19,22 +21,23 @@ class SurveyImageRepository extends ServiceEntityRepository
         parent::__construct($registry, SurveyImage::class);
     }
 
-    // /**
-    //  * @return SurveyImage[] Returns an array of SurveyImage objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param $value
+     * @return SurveyImage Returns a Survey object
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function findByUuid($value)
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
+            ->andWhere('s.uuid = :val')
             ->setParameter('val', $value)
             ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults(1)
             ->getQuery()
-            ->getResult()
+            ->getSingleResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?SurveyImage

@@ -2,8 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\SurveyImage;
+use App\Entity\SurveySubmission;
 use App\Entity\SurveySubmissionPractiseImage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -17,6 +21,23 @@ class SurveySubmissionPractiseImageRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, SurveySubmissionPractiseImage::class);
+    }
+
+    /**
+     * @param SurveyImage $image
+     * @param SurveySubmission $submission
+     * @return SurveySubmissionPractiseImage|null
+     * @throws NonUniqueResultException
+     */
+    public function findByImageAndSubmission(SurveyImage $image, SurveySubmission $submission)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.image = :image and s.submission = :sub')
+            ->setParameter('image', $image->getId())
+            ->setParameter('sub', $submission->getId())
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     // /**

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Survey;
+use App\Entity\SurveyImage;
 use App\Entity\SurveySubmission;
 use App\Entity\SurveySubmissionImage;
 use App\Entity\SurveySubmissionLongImage;
@@ -106,5 +107,36 @@ class SurveySubmissionController extends BaseController {
             ->findByUuid($uuid);
 
         return $this->json($surveySubmission);
+    }
+
+    /**
+     * @Route("/submission/{uuid}/answer_practise", name="answer_practise", methods={"POST"})
+     *
+     * @param $uuid
+     * @param Request $request
+     * @return JsonResponse
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function answerPractise($uuid, Request $request) {
+        $surveySubmission = $this->getDoctrine()
+            ->getRepository(SurveySubmission::class)
+            ->findByUuid($uuid);
+
+        $surveyImage = $this->getDoctrine()
+            ->getRepository(SurveyImage::class)
+            ->findByUuid($request->request->get('image_uuid'));
+
+        $surveySubmissionPractiseImage = $this->getDoctrine()
+            ->getRepository(SurveySubmissionPractiseImage::class)
+            ->findByImageAndSubmission($surveyImage, $surveySubmission);
+
+        if ($surveySubmissionPractiseImage == null) {
+            return $this->json('', 404);
+        }
+
+        $surveySubmissionPractiseImage->setFake($request->request->getBoolean('fake'));
+
+        return $this->json($surveySubmissionPractiseImage);
     }
 }
