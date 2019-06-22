@@ -4,7 +4,7 @@ node_js:
 before_script:
   - yarn global add @vue/cli
 script:
-  - yarn build
+  - yarn run build
 deploy:
   provider: pages
   repo: mmsr-tud-32/mmsr-tud-32.github.io
