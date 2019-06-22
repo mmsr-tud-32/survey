@@ -1,16 +1,15 @@
 <template>
-  <div class="home">
+  <div>
     <div class="row">
       <h1 class="col">{{$t("welcome")}}</h1>
       <LocaleChanger class="col-auto"></LocaleChanger>
     </div>
-    <p>{{$t("welcome_msg")}}</p>
-    <form @submit="startSurvey">
+    <form @submit="submitForm">
       <div class="form-group">
-        <label for="name">{{$t("name")}}</label>
-        <input type="text" class="form-control" id="name" :placeholder="$t('name')" v-model="name" required>
+        <label for="surveyUuid">{{$t("surveyUuid")}}</label>
+        <input id="surveyUuid" v-model="surveyUuid" class="form-control" required>
       </div>
-      <input type="submit" class="btn btn-primary" :value="$t('start')">
+      <input type="submit" class="btn btn-primary" :value="$t('submit')">
     </form>
   </div>
 </template>
@@ -20,22 +19,21 @@
   import LocaleChanger from '@/components/LocaleChanger.vue';
 
   @Component({
-    components: {
-      LocaleChanger,
-    },
+    components: {LocaleChanger},
   })
   export default class Home extends Vue {
-    private name: string = '';
+    private surveyUuid: string = '';
 
-    private created() {
-      this.$store.dispatch('setSurveyUuid', this.$route.params.uuid);
-    }
-
-    private async startSurvey(event: Event) {
+    private submitForm(event: Event) {
       event.preventDefault();
 
-      this.$store.dispatch('createSubmission', this.name)
-        .then(() => this.$router.push('/intro'));
+      this.$store.dispatch('setSurveyUuid', this.surveyUuid)
+        .then(() => this.$router.push(`/survey/${this.surveyUuid}`))
+        .catch(() => this.$router.push('/error'));
     }
   }
 </script>
+
+<style scoped>
+
+</style>
