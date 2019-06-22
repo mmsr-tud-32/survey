@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/mmsr-tud-32/survey.svg?branch=master)](https://travis-ci.org/mmsr-tud-32/survey)
 # Multimedia Search and Recommendation Survey
 
 ## Project setup
