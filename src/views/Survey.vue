@@ -34,7 +34,8 @@
     private age: number | null = null;
 
     private created() {
-      this.$store.dispatch('setSurveyUuid', this.$route.params.uuid);
+      this.$store.dispatch('setSurveyUuid', this.$route.params.uuid)
+        .catch(() => this.$router.push('/error'));
     }
 
     private startSurvey(event: Event) {

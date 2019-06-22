@@ -64,5 +64,10 @@ export default new Router({
       name: 'long',
       component: () => import(/* webpackChunkName: "long" */ './views/QuestionLong.vue'),
     },
+    {
+      path: '*',
+      name: '404',
+      component: () => import(/* webpackChunkName: "error" */ './views/Error404.vue'),
+    },
   ],
 });
