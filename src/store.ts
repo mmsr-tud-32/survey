@@ -60,13 +60,14 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    createSubmission({commit, state}, name) {
+    createSubmission({commit, state}, {age, name}) {
       if (!state.surveyUuid) {
         return;
       }
 
       const data = new FormData();
       data.append('survey_uuid', state.surveyUuid);
+      data.append('age', age);
       data.append('name', name);
 
       return axios({

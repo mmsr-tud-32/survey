@@ -27,6 +27,7 @@ class SurveySubmissionController extends BaseController {
     public function createSubmission(Request $request) {
         $surveyUuid = $request->request->get('survey_uuid');
         $name = $request->request->get('name');
+        $age = $request->request->get('age');
 
         try {
             $survey = $this->getDoctrine()
@@ -46,6 +47,7 @@ class SurveySubmissionController extends BaseController {
             $submission->setSubmitted(false);
             $submission->setSurvey($survey);
             $submission->setName($name);
+            $submission->setAge($age);
 
             $images = $survey->getImages()->getValues();
 

@@ -10,6 +10,10 @@
         <label for="name">{{$t("name")}}</label>
         <input type="text" class="form-control" id="name" :placeholder="$t('name')" v-model="name" required>
       </div>
+      <div class="form-group">
+        <label for="age">{{$t("age")}}</label>
+        <input type="number" class="form-control" id="age" :placeholder="$t('age')" v-model="age" required>
+      </div>
       <input type="submit" class="btn btn-primary" :value="$t('start')">
     </form>
   </div>
@@ -26,6 +30,7 @@
   })
   export default class Survey extends Vue {
     private name: string = '';
+    private age: number | null = null;
 
     private created() {
       this.$store.dispatch('setSurveyUuid', this.$route.params.uuid);
@@ -34,7 +39,7 @@
     private startSurvey(event: Event) {
       event.preventDefault();
 
-      this.$store.dispatch('createSubmission', this.name)
+      this.$store.dispatch('createSubmission', {name: this.name, age: this.age})
         .then(() => this.$router.push('/intro-practise'))
         .catch(() => this.$router.push('/error'));
     }
