@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "node"
+before_script:
+  - yarn global add @vue/cli
+script:
+  - yarn build
+deploy:
+  provider: pages
+  repo: mmsr-tud-32/mmsr-tud-32.github.io
+  local-dir: dist
+  skip-cleanup: true
+  github-token: $GH_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep-history: true
+  on:
+    branch: master

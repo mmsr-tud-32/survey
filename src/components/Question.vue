@@ -6,10 +6,10 @@
     <h1>{{$t("make_a_choice")}}</h1>
     <div class="row justify-content-center">
       <div class="col-auto">
-        <button class="btn btn-primary" @click="$emit('submit', false)">{{$t("real")}}</button>
+        <button class="btn btn-primary btn-lg" @click="$emit('submit', false)">{{$t("real")}}</button>
       </div>
       <div class="col-auto">
-        <button class="btn btn-primary" @click="$emit('submit', true)">{{$t("fake")}}</button>
+        <button class="btn btn-primary btn-lg" @click="$emit('submit', true)">{{$t("fake")}}</button>
       </div>
     </div>
   </div>

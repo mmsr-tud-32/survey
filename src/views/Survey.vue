@@ -22,6 +22,7 @@
 <script lang="ts">
   import {Component, Vue} from 'vue-property-decorator';
   import LocaleChanger from '@/components/LocaleChanger.vue';
+  import {preload} from '@/util';
 
   @Component({
     components: {
@@ -41,7 +42,18 @@
 
       this.$store.dispatch('createSubmission', {name: this.name, age: this.age})
         .then(() => this.$router.push('/intro-practise'))
+        .then(() => preload(this.images))
         .catch(() => this.$router.push('/error'));
+    }
+
+    private get images() {
+      const images = [
+        ...this.$store.getters.practiseImages,
+        ...this.$store.getters.shortImages,
+        ...this.$store.getters.longImages,
+      ];
+
+      return images.map((i: any) => `${process.env.VUE_APP_IMG_PATH}/${i.image.image}`);
     }
   }
 </script>
