@@ -30,7 +30,7 @@ class SurveyController extends BaseController {
         $survey->setTitle($request->request->get('title'));
         $survey->setDescription($request->request->get('description'));
         $survey->setNumPractise($request->request->getInt('num_practise'));
-        $survey->setNumQuestion($request->request->getInt('num_question'));
+        $survey->setNumQuestionShort($request->request->getInt('num_question'));
 
         $entityManager->persist($survey);
         $entityManager->flush();
@@ -65,7 +65,7 @@ class SurveyController extends BaseController {
         }
 
         if ($request->request->has('num_question')) {
-            $survey->setNumQuestion($request->request->getInt('num_question'));
+            $survey->setNumQuestionShort($request->request->getInt('num_question'));
         }
 
         $this->getDoctrine()->getManager()->flush();

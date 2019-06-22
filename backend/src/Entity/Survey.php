@@ -56,7 +56,24 @@ class Survey
     /**
      * @ORM\Column(type="integer")
      */
-    private $num_question;
+    private $num_question_short;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $num_question_long;
+
+    /**
+     * @Serializer\Expose
+     * @ORM\Column(type="integer")
+     */
+    private $timeout_short;
+
+    /**
+     * @Serializer\Expose
+     * @ORM\Column(type="integer")
+     */
+    private $timeout_long;
 
     public function __construct()
     {
@@ -179,14 +196,50 @@ class Survey
         return $this;
     }
 
-    public function getNumQuestion(): ?int
+    public function getNumQuestionShort(): ?int
     {
-        return $this->num_question;
+        return $this->num_question_short;
     }
 
-    public function setNumQuestion(int $num_question): self
+    public function setNumQuestionShort(int $num_question_short): self
     {
-        $this->num_question = $num_question;
+        $this->num_question_short = $num_question_short;
+
+        return $this;
+    }
+
+    public function getNumQuestionLong(): ?int
+    {
+        return $this->num_question_long;
+    }
+
+    public function setNumQuestionLong(int $num_question_long): self
+    {
+        $this->num_question_long = $num_question_long;
+
+        return $this;
+    }
+
+    public function getTimeoutShort(): ?int
+    {
+        return $this->timeout_short;
+    }
+
+    public function setTimeoutShort(int $timeout_short): self
+    {
+        $this->timeout_short = $timeout_short;
+
+        return $this;
+    }
+
+    public function getTimeoutLong(): ?int
+    {
+        return $this->timeout_long;
+    }
+
+    public function setTimeoutLong(int $timeout_long): self
+    {
+        $this->timeout_long = $timeout_long;
 
         return $this;
     }

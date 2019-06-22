@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Survey;
 use App\Entity\SurveySubmission;
 use App\Entity\SurveySubmissionImage;
+use App\Entity\SurveySubmissionLongImage;
 use App\Entity\SurveySubmissionPractiseImage;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -32,7 +33,7 @@ class SurveySubmissionController extends BaseController {
                 ->findByUuid($surveyUuid);
             $manager = $this->getDoctrine()->getManager();
 
-            if ($survey->getImages()->count() < ($survey->getNumPractise() + $survey->getNumQuestion())) {
+            if ($survey->getImages()->count() < ($survey->getNumPractise() + $survey->getNumQuestionShort())) {
                 return $this->json([
                     'message' => 'Not enough items in survey',
                 ], 400);
@@ -50,25 +51,35 @@ class SurveySubmissionController extends BaseController {
             shuffle($images);
 
             $practiseImages = array_slice($images, 0, $survey->getNumPractise());
-            $questionImages = array_slice($images, $survey->getNumPractise(), $survey->getNumQuestion());
+            $questionShortImages = array_slice($images, $survey->getNumPractise(), $survey->getNumQuestionShort());
+            $questionLongImages = array_slice($images, $survey->getNumPractise() + $survey->getNumQuestionShort(), $survey->getNumQuestionLong());
 
             array_map(function ($image) use ($submission, $manager) {
                 $submissionImage = new SurveySubmissionPractiseImage();
                 $submissionImage->setImage($image);
                 $submissionImage->setSubmission($submission);
-                $manager->persist($submissionImage);
-
                 $submission->addPractiseImage($submissionImage);
+
+                $manager->persist($submissionImage);
             }, $practiseImages);
 
             array_map(function ($image) use ($submission, $manager) {
                 $submissionImage = new SurveySubmissionImage();
                 $submissionImage->setImage($image);
                 $submissionImage->setSubmission($submission);
-                $manager->persist($submissionImage);
-
                 $submission->addImage($submissionImage);
-            }, $questionImages);
+
+                $manager->persist($submissionImage);
+            }, $questionShortImages);
+
+            array_map(function ($image) use ($submission, $manager) {
+                $submissionImage = new SurveySubmissionLongImage();
+                $submissionImage->setImage($image);
+                $submissionImage->setSubmission($submission);
+                $submission->addSurveySubmissionLongImage($submissionImage);
+
+                $manager->persist($submissionImage);
+            }, $questionLongImages);
 
             $manager->persist($submission);
             $manager->flush();

@@ -56,10 +56,17 @@ class SurveySubmission
      */
     private $practise_images;
 
+    /**
+     * @Serializer\Expose
+     * @ORM\OneToMany(targetEntity="App\Entity\SurveySubmissionLongImage", mappedBy="submission")
+     */
+    private $longImages;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->practise_images = new ArrayCollection();
+        $this->longImages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -167,6 +174,37 @@ class SurveySubmission
     {
         if ($this->practise_images->contains($practiseImage)) {
             $this->practise_images->removeElement($practiseImage);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SurveySubmissionLongImage[]
+     */
+    public function getLongImages(): Collection
+    {
+        return $this->longImages;
+    }
+
+    public function addSurveySubmissionLongImage(SurveySubmissionLongImage $longImage): self
+    {
+        if (!$this->longImages->contains($longImage)) {
+            $this->longImages[] = $longImage;
+            $longImage->setSubmission($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSurveySubmissionLongImage(SurveySubmissionLongImage $longImage): self
+    {
+        if ($this->longImages->contains($longImage)) {
+            $this->longImages->removeElement($longImage);
+            // set the owning side to null (unless already changed)
+            if ($longImage->getSubmission() === $this) {
+                $longImage->setSubmission(null);
+            }
         }
 
         return $this;
