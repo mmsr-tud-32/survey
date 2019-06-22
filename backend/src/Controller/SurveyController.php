@@ -30,7 +30,10 @@ class SurveyController extends BaseController {
         $survey->setTitle($request->request->get('title'));
         $survey->setDescription($request->request->get('description'));
         $survey->setNumPractise($request->request->getInt('num_practise'));
-        $survey->setNumQuestionShort($request->request->getInt('num_question'));
+        $survey->setNumQuestionShort($request->request->getInt('num_question_short'));
+        $survey->setNumQuestionLong($request->request->getInt('num_question_long'));
+        $survey->setTimeoutShort($request->request->getInt('timeout_short'));
+        $survey->setTimeoutLong($request->request->getInt('timeout_long'));
 
         $entityManager->persist($survey);
         $entityManager->flush();

@@ -37,6 +37,12 @@ class SurveySubmissionImage
      */
     private $image;
 
+    /**
+     * @Serializer\Expose
+     * @ORM\Column(type="string", length=255)
+     */
+    private $stage;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +80,18 @@ class SurveySubmissionImage
     public function setImage(?SurveyImage $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getStage(): ?string
+    {
+        return $this->stage;
+    }
+
+    public function setStage(string $stage): self
+    {
+        $this->stage = $stage;
 
         return $this;
     }

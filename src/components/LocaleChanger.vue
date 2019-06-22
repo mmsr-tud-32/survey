@@ -14,5 +14,3 @@
         protected langs: string[] = ['en', 'nl'];
     }
 </script>
-
-

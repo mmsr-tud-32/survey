@@ -6,8 +6,6 @@ use App\Entity\Survey;
 use App\Entity\SurveyImage;
 use App\Entity\SurveySubmission;
 use App\Entity\SurveySubmissionImage;
-use App\Entity\SurveySubmissionLongImage;
-use App\Entity\SurveySubmissionPractiseImage;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Exception;
@@ -35,7 +33,7 @@ class SurveySubmissionController extends BaseController {
                 ->findByUuid($surveyUuid);
             $manager = $this->getDoctrine()->getManager();
 
-            if ($survey->getImages()->count() < ($survey->getNumPractise() + $survey->getNumQuestionShort())) {
+            if ($survey->getImages()->count() < ($survey->getNumPractise() + $survey->getNumQuestionShort() + $survey->getNumQuestionLong())) {
                 return $this->json([
                     'message' => 'Not enough items in survey',
                 ], 400);
@@ -53,36 +51,18 @@ class SurveySubmissionController extends BaseController {
 
             shuffle($images);
 
-            $practiseImages = array_slice($images, 0, $survey->getNumPractise());
-            $questionShortImages = array_slice($images, $survey->getNumPractise(), $survey->getNumQuestionShort());
-            $questionLongImages = array_slice($images, $survey->getNumPractise() + $survey->getNumQuestionShort(), $survey->getNumQuestionLong());
-
-            array_map(function ($image) use ($submission, $manager) {
-                $submissionImage = new SurveySubmissionPractiseImage();
-                $submissionImage->setImage($image);
-                $submissionImage->setSubmission($submission);
-                $submission->addPractiseImage($submissionImage);
-
-                $manager->persist($submissionImage);
-            }, $practiseImages);
-
-            array_map(function ($image) use ($submission, $manager) {
+            foreach ((function () use ($survey) {
+                yield from array_fill(0, $survey->getNumPractise(), 'practise');
+                yield from array_fill(0, $survey->getNumQuestionShort(), 'short');
+                yield from array_fill(0, $survey->getNumQuestionLong(), 'long');
+            })() as $stage) {
                 $submissionImage = new SurveySubmissionImage();
-                $submissionImage->setImage($image);
+                $submissionImage->setImage(next($images));
                 $submissionImage->setSubmission($submission);
+                $submissionImage->setStage($stage);
                 $submission->addImage($submissionImage);
-
                 $manager->persist($submissionImage);
-            }, $questionShortImages);
-
-            array_map(function ($image) use ($submission, $manager) {
-                $submissionImage = new SurveySubmissionLongImage();
-                $submissionImage->setImage($image);
-                $submissionImage->setSubmission($submission);
-                $submission->addSurveySubmissionLongImage($submissionImage);
-
-                $manager->persist($submissionImage);
-            }, $questionLongImages);
+            }
 
             $manager->persist($submission);
             $manager->flush();
@@ -111,7 +91,7 @@ class SurveySubmissionController extends BaseController {
     }
 
     /**
-     * @Route("/submission/{uuid}/answer_practise", name="answer_practise", methods={"POST"})
+     * @Route("/submission/{uuid}/answer", name="answer_survey", methods={"POST"})
      *
      * @param $uuid
      * @param Request $request
@@ -119,90 +99,28 @@ class SurveySubmissionController extends BaseController {
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function answerPractise($uuid, Request $request) {
+    public function answer($uuid, Request $request) {
+        $stage = $request->request->get('stage');
+        $imageUuid = $request->request->get('image_uuid');
+        $fake = $request->request->getBoolean('fake');
+
         $surveySubmission = $this->getDoctrine()
             ->getRepository(SurveySubmission::class)
             ->findByUuid($uuid);
 
         $surveyImage = $this->getDoctrine()
             ->getRepository(SurveyImage::class)
-            ->findByUuid($request->request->get('image_uuid'));
-
-        $surveySubmissionImage = $this->getDoctrine()
-            ->getRepository(SurveySubmissionPractiseImage::class)
-            ->findByImageAndSubmission($surveyImage, $surveySubmission);
-
-        if ($surveySubmissionImage == null) {
-            return $this->json('', 404);
-        }
-
-        $surveySubmissionImage->setFake($request->request->getBoolean('fake'));
-
-        $this->getDoctrine()->getManager()->flush();
-
-        return $this->json($surveySubmissionImage);
-    }
-
-    /**
-     * @Route("/submission/{uuid}/answer_short", name="answer_short", methods={"POST"})
-     *
-     * @param $uuid
-     * @param Request $request
-     * @return JsonResponse
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     */
-    public function answerShort($uuid, Request $request) {
-        $surveySubmission = $this->getDoctrine()
-            ->getRepository(SurveySubmission::class)
-            ->findByUuid($uuid);
-
-        $surveyImage = $this->getDoctrine()
-            ->getRepository(SurveyImage::class)
-            ->findByUuid($request->request->get('image_uuid'));
+            ->findByUuid($imageUuid);
 
         $surveySubmissionImage = $this->getDoctrine()
             ->getRepository(SurveySubmissionImage::class)
-            ->findByImageAndSubmission($surveyImage, $surveySubmission);
+            ->findForSubmission($surveyImage, $surveySubmission, $stage);
 
         if ($surveySubmissionImage == null) {
             return $this->json('', 404);
         }
 
-        $surveySubmissionImage->setFake($request->request->getBoolean('fake'));
-
-        $this->getDoctrine()->getManager()->flush();
-
-        return $this->json($surveySubmissionImage);
-    }
-
-    /**
-     * @Route("/submission/{uuid}/answer_long", name="answer_long", methods={"POST"})
-     *
-     * @param $uuid
-     * @param Request $request
-     * @return JsonResponse
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     */
-    public function answerLong($uuid, Request $request) {
-        $surveySubmission = $this->getDoctrine()
-            ->getRepository(SurveySubmission::class)
-            ->findByUuid($uuid);
-
-        $surveyImage = $this->getDoctrine()
-            ->getRepository(SurveyImage::class)
-            ->findByUuid($request->request->get('image_uuid'));
-
-        $surveySubmissionImage = $this->getDoctrine()
-            ->getRepository(SurveySubmissionLongImage::class)
-            ->findByImageAndSubmission($surveyImage, $surveySubmission);
-
-        if ($surveySubmissionImage == null) {
-            return $this->json('', 404);
-        }
-
-        $surveySubmissionImage->setFake($request->request->getBoolean('fake'));
+        $surveySubmissionImage->setFake($fake);
 
         $this->getDoctrine()->getManager()->flush();
 
@@ -221,27 +139,11 @@ class SurveySubmissionController extends BaseController {
             ->getRepository(SurveySubmission::class)
             ->findByUuid($uuid);
 
-        $shortImages = $surveySubmission->getImages();
+        $images = $surveySubmission->getImages();
 
-        foreach ($shortImages as $shortImage) {
-            if ($shortImage->getFake() === null) {
-                return $this->json(['message' => vsprintf('Short image %s has no answer', [$shortImage->getImage()->getUuid()])], 400);
-            }
-        }
-
-        $longImages = $surveySubmission->getLongImages();
-
-        foreach ($longImages as $longImage) {
-            if ($longImage->getFake() === null) {
-                return $this->json(['message' => vsprintf('Long image %s has no answer', [$longImage->getImage()->getUuid()])], 400);
-            }
-        }
-
-        $practiseImages = $surveySubmission->getPractiseImages();
-
-        foreach ($practiseImages as $practiseImage) {
-            if ($practiseImage->getFake() === null) {
-                return $this->json(['message' => vsprintf('Practise image %s has no answer', [$practiseImage->getImage()->getUuid()])], 400);
+        foreach ($images as $image) {
+            if ($image->getFake() === null) {
+                return $this->json(['message' => vsprintf('Short image %s has no answer', [$image->getImage()->getUuid()])], 400);
             }
         }
 

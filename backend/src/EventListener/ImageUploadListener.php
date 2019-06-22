@@ -16,14 +16,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class ImageUploadListener {
     private $uploader;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
 
-    public function __construct(FileUploader $uploader, LoggerInterface $logger) {
+    public function __construct(FileUploader $uploader) {
         $this->uploader = $uploader;
-        $this->logger = $logger;
     }
 
     public function prePersist(LifecycleEventArgs $args) {
@@ -37,9 +32,6 @@ class ImageUploadListener {
         if (!$entity instanceof SurveyImage) {
             return;
         }
-
-        $this->logger->info('uploading file!');
-        $this->logger->info($entity->getImage());
 
         $file = $entity->getImage();
 

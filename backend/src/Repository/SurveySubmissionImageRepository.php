@@ -25,45 +25,18 @@ class SurveySubmissionImageRepository extends ServiceEntityRepository
     /**
      * @param SurveyImage $image
      * @param SurveySubmission $submission
+     * @param string $stage
      * @return SurveySubmissionImage|null
      * @throws NonUniqueResultException
      */
-    public function findByImageAndSubmission(SurveyImage $image, SurveySubmission $submission)
+    public function findForSubmission(SurveyImage $image, SurveySubmission $submission, string $stage)
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.image = :image and s.submission = :sub')
+            ->andWhere('s.image = :image and s.submission = :sub and s.stage = :stage')
             ->setParameter('image', $image)
             ->setParameter('sub', $submission)
+            ->setParameter('stage', $stage)
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-    // /**
-    //  * @return SurveySubmissionImage[] Returns an array of SurveySubmissionImage objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?SurveySubmissionImage
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

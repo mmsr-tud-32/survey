@@ -22,12 +22,12 @@ class SurveyImageRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $value
+     * @param string $value
      * @return SurveyImage Returns a Survey object
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function findByUuid($value)
+    public function findByUuid(string $value)
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.uuid = :val')
@@ -38,16 +38,4 @@ class SurveyImageRepository extends ServiceEntityRepository
             ->getSingleResult()
         ;
     }
-
-    /*
-    public function findOneBySomeField($value): ?SurveyImage
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

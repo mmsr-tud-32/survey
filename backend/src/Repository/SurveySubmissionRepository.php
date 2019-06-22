@@ -22,11 +22,11 @@ class SurveySubmissionRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $value
+     * @param string $value
      * @return SurveySubmission|null Returns a Survey object
      * @throws NonUniqueResultException
      */
-    public function findByUuid($value)
+    public function findByUuid(string $value)
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.uuid = :val')
@@ -37,33 +37,4 @@ class SurveySubmissionRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
             ;
     }
-
-    // /**
-    //  * @return SurveySubmission[] Returns an array of SurveySubmission objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?SurveySubmission
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

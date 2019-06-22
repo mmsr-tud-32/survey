@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
+import {Stage, Survey, SurveySubmission, SurveySubmissionImage} from '@/models';
 
 Vue.use(Vuex);
 
@@ -8,14 +9,16 @@ export default new Vuex.Store({
   state: {
     surveyUuid: '',
     submissionUuid: '',
-    long_images: [],
-    short_images: [],
-    practise_images: [],
+    long_images: [] as SurveySubmissionImage[],
+    short_images: [] as SurveySubmissionImage[],
+    practise_images: [] as SurveySubmissionImage[],
     timeoutShort: 0,
     timeoutLong: 0,
-    currentPractiseIndex: 0,
-    currentShortIndex: 0,
-    currentLongIndex: 0,
+    index: {
+      practise: 0,
+      short: 0,
+      long: 0,
+    },
   },
   getters: {
     shortImages: (state) => state.short_images,
@@ -23,9 +26,9 @@ export default new Vuex.Store({
     practiseImages: (state) => state.practise_images,
     timeoutShort: (state) => state.timeoutShort,
     timeoutLong: (state) => state.timeoutLong,
-    currentPractiseIndex: (state) => state.currentPractiseIndex,
-    currentShortIndex: (state) => state.currentShortIndex,
-    currentLongIndex: (state) => state.currentLongIndex,
+    currentPractiseIndex: (state) => state.index.practise,
+    currentShortIndex: (state) => state.index.short,
+    currentLongIndex: (state) => state.index.long,
   },
   mutations: {
     SET_SUBMISSION_UUID(state, submissionUuid) {
@@ -49,8 +52,8 @@ export default new Vuex.Store({
     SET_IMAGES_SHORT(state, images) {
       state.short_images = images;
     },
-    INC_CURRENT_PRACTISE_INDEX(state) {
-      state.currentPractiseIndex = state.currentPractiseIndex + 1;
+    INC_CURRENT_STAGE_INDEX(state, stage: Stage) {
+      state.index[stage] = state.index[stage] + 1;
     },
     INC_CURRENT_SHORT_INDEX(state) {
       state.currentShortIndex = state.currentShortIndex + 1;
@@ -75,63 +78,36 @@ export default new Vuex.Store({
         url: `${process.env.VUE_APP_API_HOST}/submission`,
         data,
         headers: {'Content-Type': 'multipart/form-data'},
-      }).then((response) => {
+      }).then((response: AxiosResponse<SurveySubmission>) => {
         commit('SET_SUBMISSION_UUID', response.data.uuid);
-        commit('SET_IMAGES_LONG', response.data.long_images);
-        commit('SET_IMAGES_SHORT', response.data.images);
-        commit('SET_IMAGES_PRACTISE', response.data.practise_images);
+        commit('SET_IMAGES_LONG', response.data.images.filter((img) => img.stage === 'long'));
+        commit('SET_IMAGES_SHORT', response.data.images.filter((img) => img.stage === 'short'));
+        commit('SET_IMAGES_PRACTISE', response.data.images.filter((img) => img.stage === 'practise'));
       });
     },
     setSurveyUuid({commit}, uuid) {
       return axios({
         method: 'get',
         url: `${process.env.VUE_APP_API_HOST}/survey/${uuid}`,
-      }).then((response) => {
+      }).then((response: AxiosResponse<Survey>) => {
         commit('SET_SURVEY_UUID', uuid);
         commit('SET_TIMEOUT_SHORT', response.data.timeout_short);
         commit('SET_TIMEOUT_LONG', response.data.timeout_long);
       });
     },
-    answerPractiseQuestion({commit, state}, {uuid, fake}) {
+    answerQuestion({commit, state}, {uuid, fake, stage}) {
       const data = new FormData();
       data.append('image_uuid', uuid);
       data.append('fake', fake);
+      data.append('stage', stage);
 
       return axios({
         method: 'post',
-        url: `${process.env.VUE_APP_API_HOST}/submission/${state.submissionUuid}/answer_practise`,
+        url: `${process.env.VUE_APP_API_HOST}/submission/${state.submissionUuid}/answer`,
         data,
         headers: {'Content-Type': 'multipart/form-data'},
       }).then(() => {
-        commit('INC_CURRENT_PRACTISE_INDEX');
-      });
-    },
-    answerShortQuestion({commit, state}, {uuid, fake}) {
-      const data = new FormData();
-      data.append('image_uuid', uuid);
-      data.append('fake', fake);
-
-      return axios({
-        method: 'post',
-        url: `${process.env.VUE_APP_API_HOST}/submission/${state.submissionUuid}/answer_short`,
-        data,
-        headers: {'Content-Type': 'multipart/form-data'},
-      }).then(() => {
-        commit('INC_CURRENT_SHORT_INDEX');
-      });
-    },
-    answerLongQuestion({commit, state}, {uuid, fake}) {
-      const data = new FormData();
-      data.append('image_uuid', uuid);
-      data.append('fake', fake);
-
-      return axios({
-        method: 'post',
-        url: `${process.env.VUE_APP_API_HOST}/submission/${state.submissionUuid}/answer_long`,
-        data,
-        headers: {'Content-Type': 'multipart/form-data'},
-      }).then(() => {
-        commit('INC_CURRENT_LONG_INDEX');
+        commit('INC_CURRENT_STAGE_INDEX', stage);
       });
     },
     submitSurvey({state}) {

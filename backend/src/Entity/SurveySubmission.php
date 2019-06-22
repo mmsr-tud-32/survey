@@ -51,18 +51,6 @@ class SurveySubmission
     private $images;
 
     /**
-     * @Serializer\Expose
-     * @ORM\OneToMany(targetEntity="App\Entity\SurveySubmissionPractiseImage", mappedBy="submission")
-     */
-    private $practise_images;
-
-    /**
-     * @Serializer\Expose
-     * @ORM\OneToMany(targetEntity="App\Entity\SurveySubmissionLongImage", mappedBy="submission")
-     */
-    private $longImages;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $age;
@@ -152,63 +140,6 @@ class SurveySubmission
             // set the owning side to null (unless already changed)
             if ($image->getSubmission() === $this) {
                 $image->setSubmission(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|SurveySubmissionPractiseImage[]
-     */
-    public function getPractiseImages(): Collection
-    {
-        return $this->practise_images;
-    }
-
-    public function addPractiseImage(SurveySubmissionPractiseImage $practiseImage): self
-    {
-        if (!$this->practise_images->contains($practiseImage)) {
-            $this->practise_images[] = $practiseImage;
-        }
-
-        return $this;
-    }
-
-    public function removePractiseImage(SurveySubmissionPractiseImage $practiseImage): self
-    {
-        if ($this->practise_images->contains($practiseImage)) {
-            $this->practise_images->removeElement($practiseImage);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|SurveySubmissionLongImage[]
-     */
-    public function getLongImages(): Collection
-    {
-        return $this->longImages;
-    }
-
-    public function addSurveySubmissionLongImage(SurveySubmissionLongImage $longImage): self
-    {
-        if (!$this->longImages->contains($longImage)) {
-            $this->longImages[] = $longImage;
-            $longImage->setSubmission($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSurveySubmissionLongImage(SurveySubmissionLongImage $longImage): self
-    {
-        if ($this->longImages->contains($longImage)) {
-            $this->longImages->removeElement($longImage);
-            // set the owning side to null (unless already changed)
-            if ($longImage->getSubmission() === $this) {
-                $longImage->setSubmission(null);
             }
         }
 
