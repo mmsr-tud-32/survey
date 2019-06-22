@@ -55,12 +55,6 @@ export default new Vuex.Store({
     INC_CURRENT_STAGE_INDEX(state, stage: Stage) {
       state.index[stage] = state.index[stage] + 1;
     },
-    INC_CURRENT_SHORT_INDEX(state) {
-      state.currentShortIndex = state.currentShortIndex + 1;
-    },
-    INC_CURRENT_LONG_INDEX(state) {
-      state.currentLongIndex = state.currentLongIndex + 1;
-    },
   },
   actions: {
     createSubmission({commit, state}, {age, name}) {
