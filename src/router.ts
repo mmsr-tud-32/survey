@@ -40,8 +40,8 @@ export default new Router({
       component: () => import(/* webpackChunkName: "submit" */ './views/Submit.vue'),
     },
     {
-      path: '/end',
-      name: 'end',
+      path: '/thanks',
+      name: 'thanks',
       component: () => import(/* webpackChunkName: "end" */ './views/End.vue'),
     },
     {

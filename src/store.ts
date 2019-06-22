@@ -133,5 +133,11 @@ export default new Vuex.Store({
         commit('INC_CURRENT_LONG_INDEX');
       });
     },
+    submitSurvey({state}) {
+      return axios({
+        method: 'post',
+        url: `${process.env.VUE_APP_API_HOST}/submission/${state.submissionUuid}/submit`,
+      });
+    },
   },
 });

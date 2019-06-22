@@ -23,8 +23,7 @@ class SurveySubmissionRepository extends ServiceEntityRepository
 
     /**
      * @param $value
-     * @return SurveySubmission Returns a Survey object
-     * @throws NoResultException
+     * @return SurveySubmission|null Returns a Survey object
      * @throws NonUniqueResultException
      */
     public function findByUuid($value)
@@ -35,7 +34,7 @@ class SurveySubmissionRepository extends ServiceEntityRepository
             ->orderBy('s.id', 'ASC')
             ->setMaxResults(1)
             ->getQuery()
-            ->getSingleResult()
+            ->getOneOrNullResult()
             ;
     }
 

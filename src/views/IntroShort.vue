@@ -10,8 +10,8 @@
 
 <script>
   export default {
-    name: "IntroShort"
-  }
+    name: 'IntroShort',
+  };
 </script>
 
 <style scoped>

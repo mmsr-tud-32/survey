@@ -10,8 +10,8 @@
 
 <script>
   export default {
-    name: "IntroLong"
-  }
+    name: 'IntroLong',
+  };
 </script>
 
 <style scoped>

@@ -98,7 +98,6 @@ class SurveySubmissionController extends BaseController {
      *
      * @param $uuid
      * @return JsonResponse
-     * @throws NoResultException
      * @throws NonUniqueResultException
      */
     public function getSubmission($uuid) {
@@ -137,6 +136,8 @@ class SurveySubmissionController extends BaseController {
 
         $surveySubmissionImage->setFake($request->request->getBoolean('fake'));
 
+        $this->getDoctrine()->getManager()->flush();
+
         return $this->json($surveySubmissionImage);
     }
 
@@ -167,6 +168,8 @@ class SurveySubmissionController extends BaseController {
         }
 
         $surveySubmissionImage->setFake($request->request->getBoolean('fake'));
+
+        $this->getDoctrine()->getManager()->flush();
 
         return $this->json($surveySubmissionImage);
     }
@@ -199,6 +202,51 @@ class SurveySubmissionController extends BaseController {
 
         $surveySubmissionImage->setFake($request->request->getBoolean('fake'));
 
+        $this->getDoctrine()->getManager()->flush();
+
         return $this->json($surveySubmissionImage);
+    }
+
+    /**
+     * @Route("/submission/{uuid}/submit", name="submit_survey", methods={"POST"})
+     *
+     * @param $uuid
+     * @return JsonResponse
+     * @throws NonUniqueResultException
+     */
+    public function submitSurvey($uuid) {
+        $surveySubmission = $this->getDoctrine()
+            ->getRepository(SurveySubmission::class)
+            ->findByUuid($uuid);
+
+        $shortImages = $surveySubmission->getImages();
+
+        foreach ($shortImages as $shortImage) {
+            if ($shortImage->getFake() === null) {
+                return $this->json(['message' => vsprintf('Short image %s has no answer', [$shortImage->getImage()->getUuid()])], 400);
+            }
+        }
+
+        $longImages = $surveySubmission->getLongImages();
+
+        foreach ($longImages as $longImage) {
+            if ($longImage->getFake() === null) {
+                return $this->json(['message' => vsprintf('Long image %s has no answer', [$longImage->getImage()->getUuid()])], 400);
+            }
+        }
+
+        $practiseImages = $surveySubmission->getPractiseImages();
+
+        foreach ($practiseImages as $practiseImage) {
+            if ($practiseImage->getFake() === null) {
+                return $this->json(['message' => vsprintf('Practise image %s has no answer', [$practiseImage->getImage()->getUuid()])], 400);
+            }
+        }
+
+        $surveySubmission->setSubmitted(true);
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->json('', 200);
     }
 }
