@@ -35,7 +35,7 @@
       event.preventDefault();
 
       this.$store.dispatch('createSubmission', this.name)
-        .then(() => this.$router.push('/intro'))
+        .then(() => this.$router.push('/intro-practise'))
         .catch(() => this.$router.push('/error'));
     }
   }

@@ -127,16 +127,78 @@ class SurveySubmissionController extends BaseController {
             ->getRepository(SurveyImage::class)
             ->findByUuid($request->request->get('image_uuid'));
 
-        $surveySubmissionPractiseImage = $this->getDoctrine()
+        $surveySubmissionImage = $this->getDoctrine()
             ->getRepository(SurveySubmissionPractiseImage::class)
             ->findByImageAndSubmission($surveyImage, $surveySubmission);
 
-        if ($surveySubmissionPractiseImage == null) {
+        if ($surveySubmissionImage == null) {
             return $this->json('', 404);
         }
 
-        $surveySubmissionPractiseImage->setFake($request->request->getBoolean('fake'));
+        $surveySubmissionImage->setFake($request->request->getBoolean('fake'));
 
-        return $this->json($surveySubmissionPractiseImage);
+        return $this->json($surveySubmissionImage);
+    }
+
+    /**
+     * @Route("/submission/{uuid}/answer_short", name="answer_short", methods={"POST"})
+     *
+     * @param $uuid
+     * @param Request $request
+     * @return JsonResponse
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function answerShort($uuid, Request $request) {
+        $surveySubmission = $this->getDoctrine()
+            ->getRepository(SurveySubmission::class)
+            ->findByUuid($uuid);
+
+        $surveyImage = $this->getDoctrine()
+            ->getRepository(SurveyImage::class)
+            ->findByUuid($request->request->get('image_uuid'));
+
+        $surveySubmissionImage = $this->getDoctrine()
+            ->getRepository(SurveySubmissionImage::class)
+            ->findByImageAndSubmission($surveyImage, $surveySubmission);
+
+        if ($surveySubmissionImage == null) {
+            return $this->json('', 404);
+        }
+
+        $surveySubmissionImage->setFake($request->request->getBoolean('fake'));
+
+        return $this->json($surveySubmissionImage);
+    }
+
+    /**
+     * @Route("/submission/{uuid}/answer_long", name="answer_long", methods={"POST"})
+     *
+     * @param $uuid
+     * @param Request $request
+     * @return JsonResponse
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function answerLong($uuid, Request $request) {
+        $surveySubmission = $this->getDoctrine()
+            ->getRepository(SurveySubmission::class)
+            ->findByUuid($uuid);
+
+        $surveyImage = $this->getDoctrine()
+            ->getRepository(SurveyImage::class)
+            ->findByUuid($request->request->get('image_uuid'));
+
+        $surveySubmissionImage = $this->getDoctrine()
+            ->getRepository(SurveySubmissionLongImage::class)
+            ->findByImageAndSubmission($surveyImage, $surveySubmission);
+
+        if ($surveySubmissionImage == null) {
+            return $this->json('', 404);
+        }
+
+        $surveySubmissionImage->setFake($request->request->getBoolean('fake'));
+
+        return $this->json($surveySubmissionImage);
     }
 }

@@ -5,15 +5,15 @@
 </template>
 
 <script lang="ts">
-  import {Component, Prop, Vue} from 'vue-property-decorator';
+  import {Component, Vue} from 'vue-property-decorator';
   import Question from '@/components/Question.vue';
 
   @Component({
     components: {Question},
   })
-  export default class QuestionPractise extends Vue {
-    private get practiseImages() {
-      return this.$store.getters.practiseImages;
+  export default class QuestionShort extends Vue {
+    private get shortImages() {
+      return this.$store.getters.shortImages;
     }
 
     private get timeout() {
@@ -24,8 +24,8 @@
       return this.image.uuid;
     }
 
-    private get currentPractiseIndex() {
-      return this.$store.getters.currentPractiseIndex;
+    private get currentShortIndex() {
+      return this.$store.getters.currentShortIndex;
     }
 
     private get imageFile() {
@@ -33,14 +33,14 @@
     }
 
     private get image() {
-      return this.practiseImages[this.currentPractiseIndex].image;
+      return this.shortImages[this.currentShortIndex].image;
     }
 
     private submit(fake: boolean) {
-      this.$store.dispatch('answerPractiseQuestion', {uuid: this.uuid, fake})
+      this.$store.dispatch('answerShortQuestion', {uuid: this.uuid, fake})
         .then(() => {
-          if (this.currentPractiseIndex >= this.practiseImages.length) {
-            this.$router.push('/intro-short');
+          if (this.currentShortIndex >= this.shortImages.length) {
+            this.$router.push('/intro-long');
           }
         });
     }

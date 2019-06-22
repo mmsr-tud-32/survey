@@ -10,7 +10,7 @@
 
 <script>
   export default {
-    name: 'Intro',
+    name: 'IntroPractise',
   };
 </script>
 

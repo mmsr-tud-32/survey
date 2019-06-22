@@ -33,9 +33,8 @@ class SurveySubmissionPractiseImageRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.image = :image and s.submission = :sub')
-            ->setParameter('image', $image->getId())
-            ->setParameter('sub', $submission->getId())
-            ->setMaxResults(1)
+            ->setParameter('image', $image)
+            ->setParameter('sub', $submission)
             ->getQuery()
             ->getOneOrNullResult();
     }

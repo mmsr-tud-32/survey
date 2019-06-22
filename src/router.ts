@@ -20,9 +20,29 @@ export default new Router({
       component: Survey,
     },
     {
-      path: '/intro',
-      name: 'intro',
-      component: () => import(/* webpackChunkName: "intro" */ './views/Intro.vue'),
+      path: '/intro-practise',
+      name: 'intro-practise',
+      component: () => import(/* webpackChunkName: "intro-practise" */ './views/IntroPractise.vue'),
+    },
+    {
+      path: '/intro-short',
+      name: 'intro-short',
+      component: () => import(/* webpackChunkName: "intro-short" */ './views/IntroShort.vue'),
+    },
+    {
+      path: '/intro-long',
+      name: 'intro-long',
+      component: () => import(/* webpackChunkName: "intro-long" */ './views/IntroLong.vue'),
+    },
+    {
+      path: '/submit',
+      name: 'submit',
+      component: () => import(/* webpackChunkName: "submit" */ './views/Submit.vue'),
+    },
+    {
+      path: '/end',
+      name: 'end',
+      component: () => import(/* webpackChunkName: "end" */ './views/End.vue'),
     },
     {
       path: '/error',
@@ -33,6 +53,16 @@ export default new Router({
       path: '/practise',
       name: 'practise',
       component: () => import(/* webpackChunkName: "practise" */ './views/QuestionPractise.vue'),
+    },
+    {
+      path: '/short',
+      name: 'short',
+      component: () => import(/* webpackChunkName: "short" */ './views/QuestionShort.vue'),
+    },
+    {
+      path: '/long',
+      name: 'long',
+      component: () => import(/* webpackChunkName: "long" */ './views/QuestionLong.vue'),
     },
   ],
 });

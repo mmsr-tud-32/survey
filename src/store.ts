@@ -91,15 +91,6 @@ export default new Vuex.Store({
         commit('SET_TIMEOUT_LONG', response.data.timeout_long);
       });
     },
-    nextPractiseQuestion({commit}) {
-      commit('INC_CURRENT_PRACTISE_INDEX');
-    },
-    nextShortQuestion({commit}) {
-      commit('INC_CURRENT_SHORT_INDEX');
-    },
-    nextLongQuestion({commit}) {
-      commit('INC_CURRENT_LONG_INDEX');
-    },
     answerPractiseQuestion({commit, state}, {uuid, fake}) {
       const data = new FormData();
       data.append('image_uuid', uuid);
@@ -112,6 +103,34 @@ export default new Vuex.Store({
         headers: {'Content-Type': 'multipart/form-data'},
       }).then(() => {
         commit('INC_CURRENT_PRACTISE_INDEX');
+      });
+    },
+    answerShortQuestion({commit, state}, {uuid, fake}) {
+      const data = new FormData();
+      data.append('image_uuid', uuid);
+      data.append('fake', fake);
+
+      return axios({
+        method: 'post',
+        url: `${process.env.VUE_APP_API_HOST}/submission/${state.submissionUuid}/answer_short`,
+        data,
+        headers: {'Content-Type': 'multipart/form-data'},
+      }).then(() => {
+        commit('INC_CURRENT_SHORT_INDEX');
+      });
+    },
+    answerLongQuestion({commit, state}, {uuid, fake}) {
+      const data = new FormData();
+      data.append('image_uuid', uuid);
+      data.append('fake', fake);
+
+      return axios({
+        method: 'post',
+        url: `${process.env.VUE_APP_API_HOST}/submission/${state.submissionUuid}/answer_long`,
+        data,
+        headers: {'Content-Type': 'multipart/form-data'},
+      }).then(() => {
+        commit('INC_CURRENT_LONG_INDEX');
       });
     },
   },
