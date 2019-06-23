@@ -1,6 +1,6 @@
 export default {
   // End.vue
-  end_tanks_message: 'Thanks for participating!',
+  end_thanks_message: 'Thanks for participating!',
 
   // Error.vue
   error_title: 'Something went wrong',

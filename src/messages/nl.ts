@@ -1,6 +1,6 @@
 export default {
   // End.vue
-  end_tanks_message: 'Bedankt voor het deelnemen aan dit onderzoek!',
+  end_thanks_message: 'Bedankt voor het deelnemen aan dit onderzoek!',
 
   // Error.vue
   error_title: 'Er is iets verkeerd gegaan',
@@ -16,7 +16,11 @@ export default {
 
   // IntroLong.vue
   intro_long_title: 'Introductie lange vragen',
-  intro_long_body: '| | Voor de volgende vragen heb je {n} seconden om aan te geven of een plaatje echt of nep is.',
+  intro_long_body: ' |' +
+    ' Bij de volgende afbeeldingen mag je {n} seconde kijken voordat je aang mag geven of een afbeelding echt ' +
+    'of nep is. |' +
+    ' Bij de volgende afbeeldingen mag je {n} seconden kijken voordat je aang mag geven of een afbeelding echt ' +
+    'of nep is.',
   btn_long: 'Start met lange vragen',
 
   // IntroPractise.vue
