@@ -1,20 +1,8 @@
 {
-  "name": "mmsr-survey",
-  "short_name": "mmsr-survey",
-  "icons": [
-    {
-      "src": "./img/icons/android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "./img/icons/android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ],
-  "start_url": "./index.html",
+  "name": "Multimedia Search and Recommendation Survey",
+  "short_name": "MMSR Survey",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "theme_color": "#399cb5"
 }
