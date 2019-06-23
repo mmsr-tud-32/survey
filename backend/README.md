@@ -16,6 +16,20 @@ php bin/console doctrine:migrations:migrate
 symfony server:start
 ```
 
+### Google App Engine
+
+Copy `app.yaml.sample` to `app.yaml` and fill in the values.
+
+Create a mysql database in Google cloud and fill in the values in the `DATABASE_URL`.
+
+A default bucket should be created when the app is deployed with the same name as the project e.g. `mmsr-survey.appspot.com`.
+
+Remove the `scripts` section from `composer.json`.
+
+Run `gcloud app deploy`.
+
+See the [Community Tutorial](https://cloud.google.com/community/tutorials/run-symfony-on-appengine-standard) on running Symfony in App Engine for more info.
+
 ## API
 
 ### Survey

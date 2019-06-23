@@ -13,10 +13,10 @@ use Symfony\Component\Console\Question\Question;
  * @since 23/06/2019
  */
 class AddImagesCommand extends Command {
-    protected static $defaultName = 'http:survey:add-image';
+    protected static $defaultName = 'survey:http:add';
 
     protected function configure() {
-        $this->setDescription('Add a folder of images to a survey');
+        $this->setDescription('Add a folder of images to a survey on an HTTP endpoint');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {

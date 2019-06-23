@@ -14,10 +14,10 @@ use Symfony\Component\Console\Question\Question;
  * @since 23/06/2019
  */
 class CreateSurveyCommand extends Command {
-    protected static $defaultName = 'http:survey:create';
+    protected static $defaultName = 'survey:http:create';
 
     protected function configure() {
-        $this->setDescription('Creates a new survey');
+        $this->setDescription('Creates a new survey on an HTTP endpoint');
     }
 
     public function execute(InputInterface $input, OutputInterface $output) {
