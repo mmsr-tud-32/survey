@@ -16,7 +16,7 @@ export default {
 
   // IntroLong.vue
   intro_long_title: 'Introductie lange vragen',
-  intro_long_body: ' |' +
+  intro_long_body:
     ' Bij de volgende afbeeldingen mag je {n} seconde kijken voordat je aan mag geven of een afbeelding echt ' +
     'of nep is. |' +
     ' Bij de volgende afbeeldingen mag je {n} seconden kijken voordat je aan mag geven of een afbeelding echt ' +

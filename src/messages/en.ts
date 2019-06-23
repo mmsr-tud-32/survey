@@ -16,7 +16,7 @@ export default {
 
   // IntroLong.vue
   intro_long_title: 'Introduction Long Questions',
-  intro_long_body: '| | For the following questions you have {n} seconds to judge if an image is real or fake.',
+  intro_long_body: '| For the following questions you have {n} seconds to judge if an image is real or fake.',
   btn_long: 'Start with Long Questions',
 
   // IntroPractise.vue
@@ -29,7 +29,7 @@ export default {
 
   // IntroShort.vue
   intro_short_title: 'Introduction Short Questions',
-  intro_short_body: ' |' +
+  intro_short_body:
     ' For the following questions you have {n} second to judge if an image is real or fake. |' +
     ' For the following questions you have {n} seconds to judge if an image is real or fake.',
   btn_short: 'Start with Short Questions',
