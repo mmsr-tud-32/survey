@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="btn btn-primary" @click="submit">{{$t("submit")}}</button>
+    <button class="btn btn-primary" @click="submit">{{$t("btn_submit")}}</button>
   </div>
 </template>
 

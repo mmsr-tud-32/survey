@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{$t("thanks_message")}}
+    {{$t("end_thanks_message")}}
   </div>
 </template>
 

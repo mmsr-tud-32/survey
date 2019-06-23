@@ -39,7 +39,11 @@
     }
 
     private get imgUrl() {
-      return `${process.env.VUE_APP_IMG_PATH}/${this.image}`;
+      if (this.image!.startsWith('http')) {
+        return this.image;
+      } else {
+        return `${process.env.VUE_APP_IMG_PATH}/${this.image}`;
+      }
     }
   }
 </script>

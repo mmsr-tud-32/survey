@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1>{{$t("introduction")}}</h1>
+    <h1>{{$t("intro_practise_title")}}</h1>
     <p>
-      {{$t("introduction_body")}}
+      {{$t("intro_practise_body")}}
     </p>
     <router-link class="btn btn-primary" to="/practise">{{$t("btn_practise")}}</router-link>
   </div>

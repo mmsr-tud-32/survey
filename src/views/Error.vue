@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>{{$t("error_title")}}</h2>
-    <p>{{$t("error")}}</p>
+    <p>{{$t("error_description")}}</p>
     <router-link class="btn btn-primary" to="/">{{$t("back")}}</router-link>
   </div>
 </template>

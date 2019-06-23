@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/annotations": "^1.6",
+        "google/cloud-storage": "^1.12",
         "jms/serializer-bundle": "^2.4",
         "ramsey/uuid": "^3.8",
         "symfony/console": "4.3.*",

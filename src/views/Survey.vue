@@ -54,7 +54,13 @@
         ...this.$store.getters.longImages,
       ];
 
-      return images.map((i: any) => `${process.env.VUE_APP_IMG_PATH}/${i.image.image}`);
+      return images.map((i: any) => {
+        if (i.image.image.startsWith('http')) {
+          return i.image.image;
+        } else {
+          return `${process.env.VUE_APP_IMG_PATH}/${i.image.image}`;
+        }
+      });
     }
   }
 </script>

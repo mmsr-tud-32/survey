@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="row">
-      <h1 class="col">{{$t("welcome")}}</h1>
+      <h1 class="col">{{$t("home_welcome")}}</h1>
       <LocaleChanger class="col-auto"></LocaleChanger>
     </div>
     <form @submit="submitForm">
       <div class="form-group">
-        <label for="surveyUuid">{{$t("surveyUuid")}}</label>
+        <label for="surveyUuid">{{$t("home_surveyUuid")}}</label>
         <input id="surveyUuid" v-model="surveyUuid" class="form-control" required>
       </div>
       <input type="submit" class="btn btn-primary" :value="$t('submit')">

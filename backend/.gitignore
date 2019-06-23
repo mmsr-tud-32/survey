@@ -8,3 +8,4 @@
 /vendor/
 ###< symfony/framework-bundle ###
 /public/uploads/
+app.yaml
