@@ -17,9 +17,9 @@ export default {
   // IntroLong.vue
   intro_long_title: 'Introductie lange vragen',
   intro_long_body: ' |' +
-    ' Bij de volgende afbeeldingen mag je {n} seconde kijken voordat je aang mag geven of een afbeelding echt ' +
+    ' Bij de volgende afbeeldingen mag je {n} seconde kijken voordat je aan mag geven of een afbeelding echt ' +
     'of nep is. |' +
-    ' Bij de volgende afbeeldingen mag je {n} seconden kijken voordat je aang mag geven of een afbeelding echt ' +
+    ' Bij de volgende afbeeldingen mag je {n} seconden kijken voordat je aan mag geven of een afbeelding echt ' +
     'of nep is.',
   btn_long: 'Start met lange vragen',
 
@@ -35,9 +35,9 @@ export default {
   // IntroShort.vue
   intro_short_title: 'Introductie korte vragen',
   intro_short_body: ' |' +
-    ' Bij de volgende afbeeldingen mag je {n} seconde kijken voordat je aang mag geven of een afbeelding echt ' +
+    ' Bij de volgende afbeeldingen mag je {n} seconde kijken voordat je aan mag geven of een afbeelding echt ' +
     'of nep is. |' +
-    ' Bij de volgende afbeeldingen mag je {n} seconden kijken voordat je aang mag geven of een afbeelding echt ' +
+    ' Bij de volgende afbeeldingen mag je {n} seconden kijken voordat je aan mag geven of een afbeelding echt ' +
     'of nep is.',
   btn_short: 'Start met korte vragen',
 
@@ -47,7 +47,7 @@ export default {
   // Survey.vue
   welcome: 'Welkom bij dit onderzoek',
   welcome_msg: 'Bedankt dat je met dit onderzoek wil helpen, vul je naam en leeftijd in om door te gaan.',
-  name: 'Name',
+  name: 'Naam',
   age: 'Leeftijd',
   start: 'Start onderzoek',
 

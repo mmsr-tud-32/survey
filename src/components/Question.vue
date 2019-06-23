@@ -6,10 +6,10 @@
     <h1>{{$t("make_a_choice")}}</h1>
     <div class="row justify-content-center">
       <div class="col-auto">
-        <button class="btn btn-primary btn-lg" @click="$emit('submit', false)">{{$t("real")}}</button>
+        <button class="btn btn-primary btn-lg" @click="$emit('submit', false)" :disabled="disabled">{{$t("real")}}</button>
       </div>
       <div class="col-auto">
-        <button class="btn btn-primary btn-lg" @click="$emit('submit', true)">{{$t("fake")}}</button>
+        <button class="btn btn-primary btn-lg" @click="$emit('submit', true)" :disabled="disabled">{{$t("fake")}}</button>
       </div>
     </div>
   </div>
@@ -23,6 +23,7 @@
     @Prop(String) private readonly uuid: string | undefined;
     @Prop(String) private readonly image: string | undefined;
     @Prop(Number) private readonly timeout!: number;
+    @Prop(Boolean) private readonly disabled!: boolean;
 
     private displayImg = true;
 

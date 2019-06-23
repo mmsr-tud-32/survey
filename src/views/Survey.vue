@@ -7,11 +7,11 @@
     <p>{{$t("welcome_msg")}}</p>
     <form @submit="startSurvey">
       <div class="form-group">
-        <label for="name">{{$t("name")}}</label>
+<!--        <label for="name">{{$t("name")}}</label>-->
         <input type="text" class="form-control" id="name" :placeholder="$t('name')" v-model="name" required>
       </div>
       <div class="form-group">
-        <label for="age">{{$t("age")}}</label>
+<!--        <label for="age">{{$t("age")}}</label>-->
         <input type="number" class="form-control" id="age" :placeholder="$t('age')" v-model="age" required>
       </div>
       <input type="submit" class="btn btn-primary" :value="$t('start')">

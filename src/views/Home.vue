@@ -15,23 +15,27 @@
 </template>
 
 <script lang="ts">
-  import {Component, Vue} from 'vue-property-decorator';
-  import LocaleChanger from '@/components/LocaleChanger.vue';
+import {Component, Vue} from 'vue-property-decorator';
+import LocaleChanger from '@/components/LocaleChanger.vue';
 
-  @Component({
-    components: {LocaleChanger},
-  })
-  export default class Home extends Vue {
-    private surveyUuid: string = '';
+@Component({
+  components: {LocaleChanger},
+})
+export default class Home extends Vue {
+  private surveyUuid: string = '';
 
-    private submitForm(event: Event) {
-      event.preventDefault();
-
-      this.$store.dispatch('setSurveyUuid', this.surveyUuid)
-        .then(() => this.$router.push(`/survey/${this.surveyUuid}`))
-        .catch(() => this.$router.push('/error'));
-    }
+  public created() {
+    this.surveyUuid = this.$store.getters.surveyUuid;
   }
+
+  private submitForm(event: Event) {
+    event.preventDefault();
+
+    this.$store.dispatch('setSurveyUuid', this.surveyUuid)
+      .then(() => this.$router.push(`/survey/${this.surveyUuid}`))
+      .catch(() => this.$router.push('/error'));
+  }
+}
 </script>
 
 <style scoped>

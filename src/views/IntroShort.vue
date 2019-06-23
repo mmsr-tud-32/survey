@@ -14,7 +14,7 @@
   @Component({})
   export default class Submit extends Vue {
     private get timeoutShort() {
-      return this.$store.getters.timeoutShort.length;
+      return this.$store.getters.timeoutShort;
     }
   }
 </script>

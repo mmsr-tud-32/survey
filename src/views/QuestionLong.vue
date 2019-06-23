@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Question :uuid="uuid" :timeout="timeout" :image="imageFile" @submit="submit"/>
+    <Question :uuid="uuid" :timeout="timeout" :image="imageFile" @submit="submit" :disabled="disabled"/>
   </div>
 </template>
 
@@ -13,7 +13,9 @@ import {SurveySubmissionImage} from '@/models';
   components: {Question},
 })
 export default class QuestionLong extends Vue {
-  private get longImages(): SurveySubmissionImage[] {
+  private disabled = false;
+
+  private get images(): SurveySubmissionImage[] {
     return this.$store.getters.longImages;
   }
 
@@ -25,7 +27,7 @@ export default class QuestionLong extends Vue {
     return this.image.uuid;
   }
 
-  private get currentLongIndex() {
+  private get currentIndex() {
     return this.$store.getters.currentLongIndex;
   }
 
@@ -34,13 +36,25 @@ export default class QuestionLong extends Vue {
   }
 
   private get image() {
-    return this.longImages[this.currentLongIndex].image;
+    if (this.done) {
+      return {image: '', uuid: ''};
+    } else {
+      return this.images[this.currentIndex].image;
+    }
+  }
+
+  private get done() {
+    return this.currentIndex >= this.images.length;
   }
 
   private submit(fake: boolean) {
+    if (this.disabled) { return; }
+
+    this.disabled = true;
     this.$store.dispatch('answerQuestion', {uuid: this.uuid, fake, stage: 'long'})
+      .then(() => this.disabled = false)
       .then(() => {
-        if (this.currentLongIndex >= this.longImages.length) {
+        if (this.done) {
           this.$router.push('/submit');
         }
       });

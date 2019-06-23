@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Question :uuid="uuid" :timeout="timeout" :image="imageFile" @submit="submit"/>
+    <Question :uuid="uuid" :timeout="timeout" :image="imageFile" @submit="submit" :disabled="disabled"/>
   </div>
 </template>
 
@@ -13,7 +13,9 @@ import {SurveySubmissionImage} from '@/models';
   components: {Question},
 })
 export default class QuestionPractise extends Vue {
-  private get practiseImages(): SurveySubmissionImage[] {
+  private disabled = false;
+
+  private get images(): SurveySubmissionImage[] {
     return this.$store.getters.practiseImages;
   }
 
@@ -25,7 +27,7 @@ export default class QuestionPractise extends Vue {
     return this.image.uuid;
   }
 
-  private get currentPractiseIndex() {
+  private get currentIndex() {
     return this.$store.getters.currentPractiseIndex;
   }
 
@@ -34,13 +36,25 @@ export default class QuestionPractise extends Vue {
   }
 
   private get image() {
-    return this.practiseImages[this.currentPractiseIndex].image;
+    if (this.done) {
+      return {image: '', uuid: ''};
+    } else {
+      return this.images[this.currentIndex].image;
+    }
+  }
+
+  private get done() {
+    return this.currentIndex >= this.images.length;
   }
 
   private submit(fake: boolean) {
+    if (this.disabled) { return; }
+
+    this.disabled = true;
     this.$store.dispatch('answerQuestion', {uuid: this.uuid, fake, stage: 'practise'})
+      .then(() => this.disabled = false)
       .then(() => {
-        if (this.currentPractiseIndex >= this.practiseImages.length) {
+        if (this.done) {
           this.$router.push('/intro-short');
         }
       });

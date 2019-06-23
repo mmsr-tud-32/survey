@@ -21,6 +21,7 @@ export default new Vuex.Store({
     },
   },
   getters: {
+    surveyUuid: (state) => state.surveyUuid,
     shortImages: (state) => state.short_images,
     longImages: (state) => state.long_images,
     practiseImages: (state) => state.practise_images,

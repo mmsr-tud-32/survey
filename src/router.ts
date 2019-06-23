@@ -16,7 +16,7 @@ export default new Router({
     },
     {
       path: '/survey/:uuid',
-      name: 'home',
+      name: 'survey',
       component: Survey,
     },
     {

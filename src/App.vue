@@ -1,6 +1,8 @@
 <template>
   <div id="app" class="container">
-    <router-view/>
+    <div class="py-5 text-center">
+      <router-view/>
+    </div>
   </div>
 </template>
 
