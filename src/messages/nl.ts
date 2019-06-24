@@ -59,5 +59,6 @@ export default {
   // general
   back: 'Terug',
   submit: 'Opslaan',
+  offline: 'De service is offline, het is niet mogelijk om onderzoeken op te slaan.',
 };
 

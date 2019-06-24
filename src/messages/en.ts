@@ -52,4 +52,5 @@ export default {
   // general
   back: 'Go Back',
   submit: 'Submit',
+  offline: 'The service is offline, it is not possible to submit any surveys.',
 };

@@ -19,6 +19,7 @@ export default new Vuex.Store({
       short: 0,
       long: 0,
     },
+    online: true,
   },
   getters: {
     surveyUuid: (state) => state.surveyUuid,
@@ -30,6 +31,7 @@ export default new Vuex.Store({
     currentPractiseIndex: (state) => state.index.practise,
     currentShortIndex: (state) => state.index.short,
     currentLongIndex: (state) => state.index.long,
+    online: (state) => state.online,
   },
   mutations: {
     SET_SUBMISSION_UUID(state, submissionUuid) {
@@ -55,6 +57,9 @@ export default new Vuex.Store({
     },
     INC_CURRENT_STAGE_INDEX(state, stage: Stage) {
       state.index[stage] = state.index[stage] + 1;
+    },
+    SET_OFFLINE(state) {
+      state.online = false;
     },
   },
   actions: {
@@ -110,6 +115,12 @@ export default new Vuex.Store({
         method: 'post',
         url: `${process.env.VUE_APP_API_HOST}/submission/${state.submissionUuid}/submit`,
       });
+    },
+    checkOnline({commit}) {
+      return axios({
+        method: 'get',
+        url: `${process.env.VUE_APP_API_HOST}/`,
+      }).catch(() => commit('SET_OFFLINE'));
     },
   },
 });
