@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/mmsr-tud-32/survey.svg?branch=master)](https://travis-ci.org/mmsr-tud-32/survey)
 # Multimedia Search and Recommendation Survey
 
+Backend is located at [mmsr-tud-32/survey-backend](https://github.com/mmsr-tud-32/survey-backend)
+
 ## Project setup
 ```
 yarn install
