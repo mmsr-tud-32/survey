@@ -48,6 +48,11 @@ export default {
   // Survey.vue
   welcome: 'Welkom bij dit onderzoek',
   welcome_msg: 'Bedankt dat je met dit onderzoek wil helpen, vul je naam en leeftijd in om door te gaan.',
+  welcome_msg_more: 'Met dit onderzoek willen we uitzoeken hoe makkelijk of hoe moelijk het is om oppervlakkig neppe' +
+    ' afbeeldingen te maken. Opervlakkig neppe afbeeldingen zijn afbeeldingen die er in eerste instantie echt uit' +
+    ' zien, maar als je er langer naar kijkt zie je dat de afbeelding nep is. In dit onderzoek worden afbeeldingen' +
+    ' weergegeven, eerst met een korte tijdslimiet en daarna met een langere tijdslimiet. Voor iedere afbeelding' +
+    ' wordt gevraagd of deze echt of nep is.',
   name: 'Naam',
   age: 'Leeftijd',
   start: 'Start onderzoek',

@@ -5,6 +5,7 @@
       <LocaleChanger class="col-auto"></LocaleChanger>
     </div>
     <p>{{$t("welcome_msg")}}</p>
+    <p>{{$t("welcome_msg_more")}}</p>
     <form @submit="startSurvey">
       <div class="form-group">
 <!--        <label for="name">{{$t("name")}}</label>-->

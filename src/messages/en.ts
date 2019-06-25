@@ -41,6 +41,10 @@ export default {
   // Survey.vue
   welcome: 'Welcome to this survey',
   welcome_msg: 'Thanks that you want to help, fill in your name and age to continue.',
+  welcome_msg_more: 'With this survey we want to investigate how easy or how hard it is to create shallow fake' +
+    ' images. Shallow fake images are images which look real at first glance, but after looking a bit longer it' +
+    ' it clear that the image is a fake. To test this images are shown, first with a short time limit and then' +
+    ' with a longer time limit. For each image is asked if the image is real or fake.',
   name: 'Name',
   age: 'Age',
   start: 'Start survey',
