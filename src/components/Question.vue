@@ -1,6 +1,6 @@
 <template>
   <div v-if="displayImg" class="text-center">
-    <img :alt="uuid" :src="imgUrl" class="rounded"/>
+    <img :alt="uuid" :src="imgUrl" class="rounded img-fluid"/>
   </div>
   <div v-else>
     <h1>{{$t("make_a_choice")}}</h1>
