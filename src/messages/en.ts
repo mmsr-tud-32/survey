@@ -35,6 +35,7 @@ export default {
   btn_short: 'Start with Short Questions',
 
   // Submit.vue
+  submit_feedback: 'What made it for you immediately clear that an image was a fake?',
   btn_submit: 'Submit',
 
   // Survey.vue

@@ -110,10 +110,15 @@ export default new Vuex.Store({
         commit('INC_CURRENT_STAGE_INDEX', stage);
       });
     },
-    submitSurvey({state}) {
+    submitSurvey({state}, feedback) {
+      const data = new FormData();
+      data.append('feedback', feedback);
+
       return axios({
         method: 'post',
+        data,
         url: `${process.env.VUE_APP_API_HOST}/submission/${state.submissionUuid}/submit`,
+        headers: {'Content-Type': 'multipart/form-data'},
       });
     },
     checkOnline({commit}) {

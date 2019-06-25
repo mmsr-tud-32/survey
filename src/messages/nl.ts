@@ -42,6 +42,7 @@ export default {
   btn_short: 'Start met korte vragen',
 
   // Submit.vue
+  submit_feedback: 'Wanneer zag je direct dat een afbeelding nep was? En waardoor kwam dit?',
   btn_submit: 'Opslaan',
 
   // Survey.vue
